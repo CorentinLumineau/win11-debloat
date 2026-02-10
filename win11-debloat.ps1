@@ -305,6 +305,7 @@ function Invoke-BloatwareRemoval {
         "Microsoft.MicrosoftStickyNotes"
         "Microsoft.Copilot"
         "Microsoft.Windows.Ai.Copilot.Provider"
+        "Microsoft.OneDrive"
     )
 
     # Wildcard patterns for third-party bloat
@@ -371,6 +372,23 @@ function Invoke-BloatwareRemoval {
             $prov | Remove-AppxProvisionedPackage -Online -ErrorAction SilentlyContinue | Out-Null
         }
     }
+
+    # OneDrive (Win32 app, not always caught by AppxPackage)
+    Write-Step "Removing OneDrive..."
+    Stop-Process -Name "OneDrive" -Force -ErrorAction SilentlyContinue
+    $onedrive64 = "$env:SystemRoot\SysWOW64\OneDriveSetup.exe"
+    $onedrive32 = "$env:SystemRoot\System32\OneDriveSetup.exe"
+    if (Test-Path $onedrive64) {
+        Start-Process $onedrive64 "/uninstall" -Wait -ErrorAction SilentlyContinue
+        Write-Done "OneDrive uninstalled (64-bit)"
+    } elseif (Test-Path $onedrive32) {
+        Start-Process $onedrive32 "/uninstall" -Wait -ErrorAction SilentlyContinue
+        Write-Done "OneDrive uninstalled (32-bit)"
+    } else {
+        Write-Skip "OneDrive setup not found (already removed)"
+    }
+    # Prevent OneDrive from reinstalling
+    Set-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\OneDrive" "DisableFileSyncNGSC" 1
 
     Write-Done "Bloatware removal complete"
 }
