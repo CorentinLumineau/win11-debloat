@@ -1,7 +1,7 @@
 #Requires -RunAsAdministrator
 <#
 .SYNOPSIS
-    Windows 11 Custom Debloat & Optimization Script
+    Windows 11 Custom Debloat andOptimization Script
 .DESCRIPTION
     Removes bloatware, kills telemetry, optimizes performance, and cleans up the UI.
     Tailored for Gaming + Dev + Browsing workloads.
@@ -81,11 +81,11 @@ function Disable-ServiceSafe {
 }
 
 # ============================================================================
-# SECTION 0: Safety — Restore Point & Registry Backup
+# SECTION 0: Safety - Restore Point andRegistry Backup
 # ============================================================================
 
 function Invoke-SafetyBackup {
-    Write-Banner "SECTION 0: Safety — Restore Point & Registry Backup"
+    Write-Banner "SECTION 0: Safety - Restore Point andRegistry Backup"
 
     # Verify admin privileges
     $isAdmin = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(
@@ -134,11 +134,11 @@ function Invoke-SafetyBackup {
 }
 
 # ============================================================================
-# SECTION 1: Telemetry — Kill Everything
+# SECTION 1: Telemetry - Kill Everything
 # ============================================================================
 
 function Invoke-TelemetryKill {
-    Write-Banner "SECTION 1: Telemetry — Kill Everything"
+    Write-Banner "SECTION 1: Telemetry - Kill Everything"
 
     # --- Registry keys ---
     Write-Step "Setting telemetry registry keys..."
@@ -171,12 +171,12 @@ function Invoke-TelemetryKill {
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Privacy" "TailoredExperiencesWithDiagnosticDataEnabled" 0
     Write-Done "Tailored Experiences disabled"
 
-    # Disable Input Personalization / Inking & Typing
+    # Disable Input Personalization / Inking andTyping
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\InputPersonalization" "RestrictImplicitInkCollection" 1
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\InputPersonalization" "RestrictImplicitTextCollection" 1
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\InputPersonalization\TrainedDataStore" "HarvestContacts" 0
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Personalization\Settings" "AcceptedPrivacyPolicy" 0
-    Write-Done "Input Personalization / Inking & Typing disabled"
+    Write-Done "Input Personalization / Inking andTyping disabled"
 
     # Disable App Launch Tracking
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" "Start_TrackProgs" 0
@@ -376,11 +376,11 @@ function Invoke-BloatwareRemoval {
 }
 
 # ============================================================================
-# SECTION 3: Disable Windows Search & Cortana
+# SECTION 3: Disable Windows Search andCortana
 # ============================================================================
 
 function Invoke-SearchCortanaDisable {
-    Write-Banner "SECTION 3: Disable Windows Search & Cortana"
+    Write-Banner "SECTION 3: Disable Windows Search andCortana"
 
     # Disable Windows Search service
     Write-Step "Disabling Windows Search service..."
@@ -408,11 +408,11 @@ function Invoke-SearchCortanaDisable {
 }
 
 # ============================================================================
-# SECTION 4: Windows Defender — SmartScreen Only
+# SECTION 4: Windows Defender - SmartScreen Only
 # ============================================================================
 
 function Invoke-SmartScreenDisable {
-    Write-Banner "SECTION 4: Windows Defender — Disable SmartScreen Only"
+    Write-Banner "SECTION 4: Windows Defender - Disable SmartScreen Only"
 
     Write-Step "Disabling SmartScreen for Windows Explorer..."
     Set-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" "SmartScreenEnabled" "Off" "String"
@@ -434,11 +434,11 @@ function Invoke-SmartScreenDisable {
 }
 
 # ============================================================================
-# SECTION 5: Visual Effects — Balanced
+# SECTION 5: Visual Effects - Balanced
 # ============================================================================
 
 function Invoke-VisualEffectsOptimize {
-    Write-Banner "SECTION 5: Visual Effects — Balanced"
+    Write-Banner "SECTION 5: Visual Effects - Balanced"
 
     Write-Step "Configuring visual effects (Custom mode)..."
 
@@ -449,7 +449,7 @@ function Invoke-VisualEffectsOptimize {
     # Set to Custom visual effects
     Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects" "VisualFXSetting" 3
 
-    # UserPreferencesMask — this binary blob controls individual effects.
+    # UserPreferencesMask - this binary blob controls individual effects.
     # We set a balanced profile: keep animations + transparency, disable heavy effects.
     # Bits: smooth-scroll=ON, animate-windows=ON, fade-menus=OFF, slide-menus=OFF, etc.
     # Balanced preset value (keep transparency, font smoothing, window animations):
@@ -488,11 +488,11 @@ function Invoke-VisualEffectsOptimize {
 }
 
 # ============================================================================
-# SECTION 6: Background Apps & Services — Moderate Cleanup
+# SECTION 6: Background Apps andServices - Moderate Cleanup
 # ============================================================================
 
 function Invoke-BackgroundCleanup {
-    Write-Banner "SECTION 6: Background Apps & Services — Moderate Cleanup"
+    Write-Banner "SECTION 6: Background Apps andServices - Moderate Cleanup"
 
     # Disable background apps globally (Windows 11)
     Write-Step "Disabling background apps globally..."
@@ -528,11 +528,11 @@ function Invoke-BackgroundCleanup {
 }
 
 # ============================================================================
-# SECTION 7: Start Menu, Taskbar & Explorer — Full Cleanup
+# SECTION 7: Start Menu, Taskbar andExplorer - Full Cleanup
 # ============================================================================
 
 function Invoke-ShellCleanup {
-    Write-Banner "SECTION 7: Start Menu, Taskbar & Explorer — Full Cleanup"
+    Write-Banner "SECTION 7: Start Menu, Taskbar andExplorer - Full Cleanup"
 
     $contentPath = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"
     $explorerAdv = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
@@ -672,11 +672,11 @@ function Invoke-NetworkOptimize {
 }
 
 # ============================================================================
-# SECTION 9: Power Plan — High Performance
+# SECTION 9: Power Plan - High Performance
 # ============================================================================
 
 function Invoke-PowerPlanOptimize {
-    Write-Banner "SECTION 9: Power Plan — High Performance"
+    Write-Banner "SECTION 9: Power Plan - High Performance"
 
     # Activate High Performance plan
     Write-Step "Activating High Performance power plan..."
@@ -750,8 +750,8 @@ function Invoke-PowerPlanOptimize {
 
 Write-Host ""
 Write-Host "  ╔══════════════════════════════════════════════════════════════╗" -ForegroundColor Magenta
-Write-Host "  ║       Windows 11 Custom Debloat & Optimization Script       ║" -ForegroundColor Magenta
-Write-Host "  ║       Gaming + Dev + Browsing — Kill Telemetry Edition      ║" -ForegroundColor Magenta
+Write-Host "  ║       Windows 11 Custom Debloat andOptimization Script       ║" -ForegroundColor Magenta
+Write-Host "  ║       Gaming + Dev + Browsing - Kill Telemetry Edition      ║" -ForegroundColor Magenta
 Write-Host "  ╚══════════════════════════════════════════════════════════════╝" -ForegroundColor Magenta
 Write-Host ""
 Write-Host "  This script will:" -ForegroundColor White
@@ -796,7 +796,8 @@ Write-Host "  ╔═════════════════════
 Write-Host "  ║                    DEBLOAT COMPLETE!                        ║" -ForegroundColor Green
 Write-Host "  ╚══════════════════════════════════════════════════════════════╝" -ForegroundColor Green
 Write-Host ""
-Write-Host "  Elapsed time: $($stopwatch.Elapsed.ToString('mm\:ss'))" -ForegroundColor Cyan
+$elapsed = '{0:mm}:{0:ss}' -f $stopwatch.Elapsed
+Write-Host "  Elapsed time: $elapsed" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "  What was done:" -ForegroundColor White
 Write-Host "    - Restore point created + registry backed up to .\registry-backup\" -ForegroundColor Gray
